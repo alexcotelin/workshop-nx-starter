@@ -3,6 +3,9 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/reporting"
   },
-  "include": ["**/*.ts", "../../libs/reporting/feature/src/index.ts"],
-  "exclude": ["**/*.spec.ts", "src/test.ts"]
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": ["**/*.d.ts", "../../libs/reporting/feature/src/index.ts"]
 }

@@ -11,7 +11,7 @@ import { ApiConfig } from './api-config';
   providers: [CompanyService, TicketService, UserService]
 })
 export class ClientSharedTuskdeskApiDataAccessModule {
-  static forRoot(rootUrl: string = ''): ModuleWithProviders {
+  static forRoot(rootUrl: string = ''): ModuleWithProviders<ClientSharedTuskdeskApiDataAccessModule> {
     return {
       ngModule: ClientSharedTuskdeskApiDataAccessModule,
       providers: [{ provide: ApiConfig, useValue: { rootUrl } }]
