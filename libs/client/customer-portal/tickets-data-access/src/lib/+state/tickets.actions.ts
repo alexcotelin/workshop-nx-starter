@@ -22,3 +22,13 @@ export const ticketLoadError = createAction(
   '[Tickets] Error Loading Ticket by Id',
   props<{ error: any }>()
 );
+
+export const routerLoadTicket = createAction(
+  '[Tickets] Load Ticket from Router Navigation',
+  props<{ ticketId: number }>()
+);
+
+export const selectTicket = createAction(
+  '[Tickets] Select Ticket by Id',
+  props<{ selectedId: number }>()
+);

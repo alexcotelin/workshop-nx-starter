@@ -6,7 +6,7 @@ export class TicketTimerService {
   readonly timer$ = Observable.create(observer => {
     let count = 0;
 
-    const intervalId = setInterval(() => {
+    const intervalId = setInterval(_ => {
       observer.next(++count);
     }, 350);
     observer.next(++count);
@@ -14,5 +14,15 @@ export class TicketTimerService {
     return () => clearInterval(intervalId);
   });
 
-  constructor() {}
+  private ticketsToWork = new BehaviorSubject<number[]>([]);
+  readonly workRegistry = [];
+  readonly ticketsToWork$ = this.ticketsToWork.asObservable();
+
+  addTicketToWork(ticketId: number) {
+    const list = this.workRegistry;
+    if (list.indexOf(ticketId) === -1) {
+      list.push(ticketId);
+    }
+    this.ticketsToWork.next([...list]);
+  }
 }

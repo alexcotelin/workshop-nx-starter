@@ -1,8 +1,8 @@
 import { Ticket } from '@tuskdesk-suite/shared/ticket-utils';
 import { FEATURE_TICKETS } from './tickets.reducer';
+import { EntityState } from '@ngrx/entity';
 
-export interface TicketsState {
-  list: Ticket[];
+export interface TicketsState extends EntityState<Ticket> {
   selectedId: number;
   loading: boolean;
   error: any;

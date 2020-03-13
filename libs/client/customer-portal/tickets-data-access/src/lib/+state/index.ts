@@ -3,3 +3,4 @@ export * from './tickets.effects';
 export * from './tickets.interfaces';
 export * from './tickets.reducer';
 export * from './tickets.selectors';
+export * from './tickets.facade';

@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Ticket } from '@tuskdesk-suite/shared/ticket-utils';
 import { Observable } from 'rxjs/Observable';
-import { Store, select } from '@ngrx/store';
+
 import {
   allTicketsLoaded,
-  ticketsQuery,
-  loadAllTickets
+  loadAllTickets,
+  TicketsFacade
 } from '@tuskdesk-suite/client/customer-portal/tickets-data-access';
+import { TicketTimerService } from '../ticket-timer.service';
 
 @Component({
   selector: 'tuskdesk-suite-ticket-list',
@@ -15,16 +16,12 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketListComponent {
-  tickets$: Observable<Ticket[]> = this.store.pipe(
-    select(ticketsQuery.getAllTickets)
-  );
+  tickets$: Observable<Ticket[]> = this.ticketsFacade.allTickets$;
+  loading$: Observable<boolean> = this.ticketsFacade.isLoading$;
+  markedToWork$: Observable<number[]> = this.timerService.ticketsToWork$;
 
-  constructor(private store: Store<any>) {
-    this.store.dispatch(loadAllTickets());
-  }
-}
-
-// Filter function
-function isOpen(ticket: Ticket) {
-  return ticket.status === 'open';
+  constructor(
+    private ticketsFacade: TicketsFacade,
+    private timerService: TicketTimerService
+  ) {}
 }

@@ -2,6 +2,9 @@ import { Ticket } from '@tuskdesk-suite/shared/ticket-utils';
 import { PartialAppState, TicketsState } from './tickets.interfaces';
 import { FEATURE_TICKETS } from './tickets.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ticketsAdapter } from './tickets.reducer';
+
+const { selectAll, selectEntities } = ticketsAdapter.getSelectors();
 
 export namespace ticketsQuery {
   const selectTicketState = createFeatureSelector<TicketsState>(
@@ -19,17 +22,15 @@ export namespace ticketsQuery {
     selectTicketState,
     state => state.selectedId
   );
-  export const getAllTickets = createSelector(
+  export const getAllTickets = createSelector(selectTicketState, selectAll);
+  export const getTicketsAsEntities = createSelector(
     selectTicketState,
-    state => state.list
+    selectEntities
   );
 
   export const getSelectedTicket = createSelector(
-    getAllTickets,
+    getTicketsAsEntities,
     getSelectedId,
-    (tickets, id) => {
-      const ticket = id ? tickets.find(x => x.id === id) : null;
-      return ticket ? ({ ...ticket } as Ticket) : null;
-    }
+    (tickets, id) => tickets[id]
   );
 }

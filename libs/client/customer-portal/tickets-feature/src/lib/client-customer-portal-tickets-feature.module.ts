@@ -11,6 +11,8 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ClientSharedTuskdeskApiDataAccessModule } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
 import { TicketTimerService } from './ticket-timer.service';
 import { ClientCustomerPortalTicketsDataAccessModule } from '@tuskdesk-suite/client/customer-portal/tickets-data-access';
+import { EffectsModule } from '@ngrx/effects';
+import { RouterEffects } from './+state/router.effects';
 
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import { ClientCustomerPortalTicketsDataAccessModule } from '@tuskdesk-suite/cli
         component: SearchTicketsComponent
       }
     ]),
-    ClientCustomerPortalTicketsDataAccessModule
+    ClientCustomerPortalTicketsDataAccessModule,
+    EffectsModule.forFeature([RouterEffects])
   ],
   declarations: [
     SearchTicketsComponent,
