@@ -1,20 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {
   TicketService,
   UserService
 } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
-import { User } from '@tuskdesk-suite/shared/user-utils';
-import { Subscription, of } from 'rxjs';
+
 import {
   debounceTime,
   distinctUntilChanged,
-  tap,
   filter,
   map,
   switchMap
 } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 interface SearchResult {
   id: number;
