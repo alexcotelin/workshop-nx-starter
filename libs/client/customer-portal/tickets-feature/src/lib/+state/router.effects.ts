@@ -8,8 +8,10 @@ import { TicketListComponent } from '../ticket-list/ticket-list.component';
 import { TicketDetailsComponent } from '../ticket-details/ticket-details.component';
 import {
   loadAllTickets,
-  routerLoadTicket
+  routerLoadTicket,
+  routerSearchTickets
 } from '@tuskdesk-suite/client/customer-portal/tickets-data-access';
+import { SearchTicketsComponent } from '../search-tickets/search-tickets.component';
 
 @Injectable()
 export class RouterEffects {
@@ -29,6 +31,18 @@ export class RouterEffects {
 
         // Load ticket details
         return routerLoadTicket({ ticketId });
+      }
+    })
+  );
+
+  loadView_SearchTickets$ = createEffect(() =>
+    this.d.navigation(SearchTicketsComponent, {
+      run: (a: ActivatedRouteSnapshot) => {
+        const searchTerm = a.queryParamMap.get('searchTerm');
+        const assignedToUser = a.queryParamMap.get('assignedToUser');
+
+        // Search ticket query details
+        return routerSearchTickets({ searchTerm, assignedToUser });
       }
     })
   );

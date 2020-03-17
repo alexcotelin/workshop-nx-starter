@@ -32,3 +32,20 @@ export const selectTicket = createAction(
   '[Tickets] Select Ticket by Id',
   props<{ selectedId: number }>()
 );
+
+export const routerSearchTickets = createAction(
+  '[Tickets] Search Tickets from Router Navigation',
+  props<{ searchTerm: string; assignedToUser: null | string }>()
+);
+export const searchTickets = createAction(
+  '[Tickets] Search tickets',
+  props<{ searchTerm: string; assignedToUser: null | string }>()
+);
+export const ticketsSearched = createAction(
+  '[Tickets] Tickets Searched',
+  props<{ tickets: Ticket[] }>()
+);
+export const ticketsSearchError = createAction(
+  '[Tickets] Error Searching Tickets',
+  props<{ error: any }>()
+);

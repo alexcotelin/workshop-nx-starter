@@ -3,9 +3,16 @@ import { FEATURE_TICKETS } from './tickets.reducer';
 import { EntityState } from '@ngrx/entity';
 
 export interface TicketsState extends EntityState<Ticket> {
+  searchCriteria: SearchCriteria;
+  searchResult: Ticket[];
   selectedId: number;
   loading: boolean;
   error: any;
+}
+
+export interface SearchCriteria {
+  searchTerm?: string;
+  assignedToUser?: string;
 }
 
 /**

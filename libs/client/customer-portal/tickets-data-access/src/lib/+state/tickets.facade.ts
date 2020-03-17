@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ticketsQuery } from './tickets.selectors';
-import { PartialAppState } from './tickets.interfaces';
+import { PartialAppState, SearchCriteria } from './tickets.interfaces';
 import { Ticket } from '@tuskdesk-suite/shared/ticket-utils';
+import { searchTickets } from './tickets.actions';
 
 @Injectable()
 export class TicketsFacade {
@@ -25,6 +26,13 @@ export class TicketsFacade {
     })
   );
 
+  searchCriteria$: Observable<SearchCriteria> = this.store.pipe(
+    select(ticketsQuery.getSearchCriteria)
+  );
+  searchResult$: Observable<Ticket[]> = this.store.pipe(
+    select(ticketsQuery.getSearchResult)
+  );
+
   // Status conditions
   error$: Observable<string> = this.store.pipe(select(ticketsQuery.getError));
   isLoading$: Observable<boolean> = this.store.pipe(
@@ -32,4 +40,8 @@ export class TicketsFacade {
   );
 
   constructor(private readonly store: Store<PartialAppState>) {}
+
+  search(searchTerm: string, assignedToUser: string) {
+    this.store.dispatch(searchTickets({ searchTerm, assignedToUser }));
+  }
 }

@@ -2,7 +2,9 @@ import { TicketsState } from './tickets.interfaces';
 import {
   allTicketsLoaded,
   ticketLoaded,
-  selectTicket
+  selectTicket,
+  ticketsSearched,
+  searchTickets
 } from './tickets.actions';
 import { createReducer, on, Action, State } from '@ngrx/store';
 import { EntityAdapter, createEntityAdapter, EntityState } from '@ngrx/entity';
@@ -16,6 +18,8 @@ export const ticketsAdapter: EntityAdapter<Ticket> = createEntityAdapter<
 >();
 
 export const initialState: TicketsState = ticketsAdapter.getInitialState({
+  searchCriteria: { searchTerm: '', assignedToUser: null },
+  searchResult: null,
   selectedId: -1,
   loading: false,
   error: ''
@@ -30,7 +34,15 @@ const reducer = createReducer(
   on(ticketLoaded, (state, { ticket }) =>
     ticketsAdapter.upsertOne(ticket, state)
   ),
-  on(selectTicket, (state, { selectedId }) => ({ ...state, selectedId }))
+  on(selectTicket, (state, { selectedId }) => ({ ...state, selectedId })),
+  on(ticketsSearched, (state, { tickets }) => ({
+    ...state,
+    searchResult: tickets
+  })),
+  on(searchTickets, (state, { searchTerm, assignedToUser }) => ({
+    ...state,
+    searchCriteria: { searchTerm, assignedToUser }
+  }))
 );
 
 export function ticketsReducer(

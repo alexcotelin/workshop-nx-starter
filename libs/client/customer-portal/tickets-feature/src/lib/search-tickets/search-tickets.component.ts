@@ -1,11 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {
-  TicketService,
-  UserService
-} from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
-
 import {
   debounceTime,
   distinctUntilChanged,
@@ -14,6 +10,9 @@ import {
   switchMap
 } from 'rxjs/operators';
 import { of } from 'rxjs';
+
+import { UserService } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
+import { TicketsFacade } from '@tuskdesk-suite/client/customer-portal/tickets-data-access/src';
 
 interface SearchResult {
   id: number;
@@ -26,10 +25,11 @@ interface SearchResult {
   templateUrl: './search-tickets.component.html',
   styleUrls: ['./search-tickets.component.scss']
 })
-export class SearchTicketsComponent {
+export class SearchTicketsComponent implements OnInit {
   searchTerm = new FormControl();
   assignedToUser = new FormControl();
-  searchResults$: Observable<SearchResult[]>;
+  searchCriteria$ = this.ticketsFacade.searchCriteria$;
+  searchResults$: Observable<SearchResult[]> = this.ticketsFacade.searchResult$;
   users$: Observable<string[]> = this.assignedToUser.valueChanges.pipe(
     debounceTime(230),
     distinctUntilChanged(),
@@ -44,14 +44,38 @@ export class SearchTicketsComponent {
   );
 
   constructor(
-    private ticketService: TicketService,
-    private userService: UserService
+    private userService: UserService,
+    private ticketsFacade: TicketsFacade,
+    private router: Router
   ) {}
 
+  ngOnInit() {
+    this.searchCriteria$.subscribe(({ searchTerm, assignedToUser }) => {
+      this.searchTerm.setValue(searchTerm);
+      this.assignedToUser.setValue(assignedToUser);
+    });
+  }
+
   submit() {
-    this.searchResults$ = this.ticketService.searchTickets(
-      this.searchTerm.value,
-      this.assignedToUser.value
-    );
+    this.router.navigate([], {
+      queryParams: this.createQueryParams(
+        this.searchTerm.value,
+        this.assignedToUser.value
+      ),
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  private createQueryParams(searchTerm?: string, assignedToUser?: string) {
+    const queryParams: any = {};
+
+    if (searchTerm) {
+      queryParams.searchTerm = searchTerm;
+    }
+    if (assignedToUser) {
+      queryParams.assignedToUser = assignedToUser;
+    }
+
+    return queryParams;
   }
 }

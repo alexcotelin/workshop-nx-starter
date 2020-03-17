@@ -33,4 +33,13 @@ export namespace ticketsQuery {
     getSelectedId,
     (tickets, id) => tickets[id]
   );
+
+  export const getSearchCriteria = createSelector(
+    selectTicketState,
+    state => state.searchCriteria
+  );
+  export const getSearchResult = createSelector(
+    selectTicketState,
+    state => state.searchResult
+  );
 }

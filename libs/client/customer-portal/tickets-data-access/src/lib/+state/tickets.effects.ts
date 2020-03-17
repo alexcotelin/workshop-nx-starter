@@ -8,10 +8,13 @@ import {
   ticketLoaded,
   routerLoadTicket,
   allTicketsLoadError,
-  selectTicket
+  selectTicket,
+  ticketsSearched,
+  searchTickets,
+  routerSearchTickets
 } from './tickets.actions';
 import { TicketService } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
-import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom, filter } from 'rxjs/operators';
 import { DataPersistence } from '@nrwl/angular';
 import { ticketsQuery } from './tickets.selectors';
 import { PartialAppState } from './tickets.interfaces';
@@ -46,6 +49,19 @@ export class TicketEffects {
     )
   );
 
+  routeAndSearch$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(routerSearchTickets),
+      filter(
+        ({ searchTerm, assignedToUser }) =>
+          searchTerm !== null || assignedToUser !== null
+      ),
+      map(({ searchTerm, assignedToUser }) =>
+        searchTickets({ searchTerm, assignedToUser })
+      )
+    )
+  );
+
   loadAllTickets$ = createEffect(() =>
     this.d.fetch<ReturnType<typeof loadAllTickets>>(loadAllTickets, {
       run: (action, state: PartialAppState) => {
@@ -63,6 +79,17 @@ export class TicketEffects {
         return this.ticketService
           .ticketById(a.ticketId)
           .pipe(map(ticket => ticketLoaded({ ticket })));
+      },
+      onError: () => {}
+    })
+  );
+
+  ticketsSearched$ = createEffect(() =>
+    this.d.fetch<ReturnType<typeof searchTickets>>(searchTickets, {
+      run: ({ searchTerm, assignedToUser }, state: PartialAppState) => {
+        return this.ticketService
+          .searchTickets(searchTerm, assignedToUser)
+          .pipe(map(tickets => ticketsSearched({ tickets })));
       },
       onError: () => {}
     })
