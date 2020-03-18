@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { DataPersistence } from '@nrwl/angular';
+import { switchMap, map, withLatestFrom, filter } from 'rxjs/operators';
+
+import { TicketService } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
 import {
   loadAllTickets,
   allTicketsLoaded,
@@ -11,11 +15,11 @@ import {
   selectTicket,
   ticketsSearched,
   searchTickets,
-  routerSearchTickets
+  routerSearchTickets,
+  updateTicket,
+  ticketUpdated,
+  ticketUpdateError
 } from './tickets.actions';
-import { TicketService } from '@tuskdesk-suite/client/shared/tuskdesk-api-data-access';
-import { switchMap, map, withLatestFrom, filter } from 'rxjs/operators';
-import { DataPersistence } from '@nrwl/angular';
 import { ticketsQuery } from './tickets.selectors';
 import { PartialAppState } from './tickets.interfaces';
 
@@ -92,6 +96,24 @@ export class TicketEffects {
           .pipe(map(tickets => ticketsSearched({ tickets })));
       },
       onError: () => {}
+    })
+  );
+
+  updateTicket$ = createEffect(() =>
+    this.d.pessimisticUpdate(updateTicket, {
+      run: (
+        action: ReturnType<typeof updateTicket>,
+        state: PartialAppState
+      ) => {
+        return this.ticketService
+          .updateTicketMessage(action.ticketId, action.message)
+          .pipe(map(ticket => ticketUpdated({ ticket })));
+      },
+
+      onError: (action: ReturnType<typeof updateTicket>, error) => {
+        console.error('Error', error);
+        return ticketUpdateError({ error });
+      }
     })
   );
 

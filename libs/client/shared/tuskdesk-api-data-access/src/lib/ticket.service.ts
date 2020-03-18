@@ -47,7 +47,7 @@ export class TicketService {
   }
 
   updateTicketMessage(id: number, message: string): Observable<Ticket> {
-    return this.http.put<Ticket>(`${this._rootUrl}/api/tickets`, {
+    return this.http.post<Ticket>(`${this._rootUrl}/api/tickets`, {
       id,
       message
     });

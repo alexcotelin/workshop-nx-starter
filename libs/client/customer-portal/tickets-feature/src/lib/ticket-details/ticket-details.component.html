@@ -39,7 +39,7 @@
     </div>
   </header>
   <div class="ticket-message">
-    <ng-container *ngIf="true">
+    <ng-container *ngIf="!editMode; else editTicketMessage">
       <p>{{ ticket.message }}</p>
     </ng-container>
     <ng-template #editTicketMessage>

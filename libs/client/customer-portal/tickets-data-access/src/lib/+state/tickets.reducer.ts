@@ -4,7 +4,9 @@ import {
   ticketLoaded,
   selectTicket,
   ticketsSearched,
-  searchTickets
+  searchTickets,
+  updateTicket,
+  ticketUpdated
 } from './tickets.actions';
 import { createReducer, on, Action, State } from '@ngrx/store';
 import { EntityAdapter, createEntityAdapter, EntityState } from '@ngrx/entity';
@@ -31,7 +33,7 @@ const reducer = createReducer(
     ticketsAdapter.setAll(tickets, state)
   ),
   // NOTE: ticketLoaded doesn't yet work for updating a ticket.... only adding one
-  on(ticketLoaded, (state, { ticket }) =>
+  on(ticketLoaded, ticketUpdated, (state, { ticket }) =>
     ticketsAdapter.upsertOne(ticket, state)
   ),
   on(selectTicket, (state, { selectedId }) => ({ ...state, selectedId })),

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { map, take, tap } from 'rxjs/operators';
 import { TicketTimerService } from '../ticket-timer.service';
 import { AddCommentFacade } from '../+state/add-comment.facade';
+import { UpdateTicketFacade } from '../+state/update-ticket.facade';
 
 @Component({
   selector: 'tuskdesk-suite-ticket-details',
@@ -24,22 +25,37 @@ export class TicketDetailsComponent implements OnInit {
   timer$: Observable<number>;
   //   private id$ = this.route.params.pipe(map(params => +params['id']));
   onDestroy$ = new Subject<void>();
+  editMode = false;
 
   constructor(
     private route: ActivatedRoute,
     private ticketTimerService: TicketTimerService,
     private ticketsFacade: TicketsFacade,
     private commentsFacade: CommentsFacade,
-    private addCommentFacade: AddCommentFacade
+    private addCommentFacade: AddCommentFacade,
+    private updateTicketFacade: UpdateTicketFacade
   ) {}
 
   ngOnInit() {}
 
-  switchToEdit() {}
+  switchToEdit() {
+    this.ticket$
+      .pipe(
+        tap(() => (this.editMode = !this.editMode)),
+        tap(ticket => this.ticketMessage.setValue(ticket.message)),
+        take(1)
+      )
+      .subscribe();
+  }
 
-  cancelEdit() {}
+  cancelEdit() {
+    this.editMode = false;
+  }
 
-  saveEdit() {}
+  saveEdit() {
+    this.editMode = false;
+    this.updateTicketFacade.updateTicketMessage(this.ticketMessage.value);
+  }
 
   startTimer() {
     this.timer$ = this.ticketTimerService.timer$;

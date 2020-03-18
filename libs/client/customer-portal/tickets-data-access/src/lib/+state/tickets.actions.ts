@@ -49,3 +49,16 @@ export const ticketsSearchError = createAction(
   '[Tickets/API] Error Searching Tickets',
   props<{ error: any }>()
 );
+
+export const updateTicket = createAction(
+  '[Tickets/API] Update Ticket',
+  props<{ ticketId: number; message: string }>()
+);
+export const ticketUpdated = createAction(
+  '[Tickets/API] Ticket Updated',
+  props<{ ticket: Ticket }>()
+);
+export const ticketUpdateError = createAction(
+  '[Tickets/API] Error Updating Ticket',
+  props<{ error: any }>()
+);

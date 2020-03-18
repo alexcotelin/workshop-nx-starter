@@ -22,6 +22,8 @@ import { CommentsEffects } from './+state/comments.effects';
 import { AddCommentFacade } from './+state/add-comment.facade';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoggedInUserIdService } from './logged-in-user-id.service';
+import { UpdateTicketFacade } from './+state/update-ticket.facade';
+import { TicketsEffects } from './+state/tickets.effects';
 
 @NgModule({
   imports: [
@@ -47,7 +49,7 @@ import { LoggedInUserIdService } from './logged-in-user-id.service';
     ]),
     ClientCustomerPortalTicketsDataAccessModule,
     ClientCustomerPortalCommentsDataAccessModule,
-    EffectsModule.forFeature([RouterEffects, CommentsEffects])
+    EffectsModule.forFeature([RouterEffects, CommentsEffects, TicketsEffects])
   ],
   declarations: [
     SearchTicketsComponent,
@@ -57,6 +59,7 @@ import { LoggedInUserIdService } from './logged-in-user-id.service';
   providers: [
     TicketTimerService,
     AddCommentFacade,
+    UpdateTicketFacade,
     {
       provide: BackendUserIdService,
       useClass: LoggedInUserIdService
