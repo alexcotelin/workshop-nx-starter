@@ -1210,6 +1210,37 @@
         }
       },
       "schematics": {}
+    },
+    "client-customer-portal-comments-data-access": {
+      "projectType": "library",
+      "root": "libs/client/customer-portal/comments-data-access",
+      "sourceRoot": "libs/client/customer-portal/comments-data-access/src",
+      "prefix": "tuskdesk-suite",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/client/customer-portal/comments-data-access/tsconfig.lib.json",
+              "libs/client/customer-portal/comments-data-access/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/client/customer-portal/comments-data-access/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client/customer-portal/comments-data-access/jest.config.js",
+            "tsConfig": "libs/client/customer-portal/comments-data-access/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/client/customer-portal/comments-data-access/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "defaultProject": "customer-portal",

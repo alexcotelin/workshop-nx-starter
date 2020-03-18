@@ -1,25 +1,25 @@
 import { createAction, props } from '@ngrx/store';
 import { Ticket } from '@tuskdesk-suite/shared/ticket-utils';
 
-export const loadAllTickets = createAction('[Tickets] Load All Tickets');
+export const loadAllTickets = createAction('[Tickets/API] Load All Tickets');
 export const allTicketsLoadError = createAction(
-  '[Tickets] Error Loading All Tickets',
+  '[Tickets/API] Error Loading All Tickets',
   props<{ error: any }>()
 );
 export const allTicketsLoaded = createAction(
-  '[Tickets] All Tickets Loaded',
+  '[Tickets/API] All Tickets Loaded',
   props<{ tickets: Ticket[] }>()
 );
 export const loadTicket = createAction(
-  '[Tickets] Load Ticket by Id',
+  '[Tickets/API] Load Ticket by Id',
   props<{ ticketId: number }>()
 );
 export const ticketLoaded = createAction(
-  '[Tickets] Ticket Loaded',
+  '[Tickets/API] Ticket Loaded',
   props<{ ticket: Ticket }>()
 );
 export const ticketLoadError = createAction(
-  '[Tickets] Error Loading Ticket by Id',
+  '[Tickets/API] Error Loading Ticket by Id',
   props<{ error: any }>()
 );
 
@@ -38,14 +38,14 @@ export const routerSearchTickets = createAction(
   props<{ searchTerm: string; assignedToUser: null | string }>()
 );
 export const searchTickets = createAction(
-  '[Tickets] Search tickets',
+  '[Tickets/API] Search tickets',
   props<{ searchTerm: string; assignedToUser: null | string }>()
 );
 export const ticketsSearched = createAction(
-  '[Tickets] Tickets Searched',
+  '[Tickets/API] Tickets Searched',
   props<{ tickets: Ticket[] }>()
 );
 export const ticketsSearchError = createAction(
-  '[Tickets] Error Searching Tickets',
+  '[Tickets/API] Error Searching Tickets',
   props<{ error: any }>()
 );

@@ -101,6 +101,9 @@
     },
     "client-logs-data-access": {
       "tags": ["type:data-access", "scope:logs", "platform:client"]
+    },
+    "client-customer-portal-comments-data-access": {
+      "tags": ["type:data-access", "scope:customer-portal", "platform:client"]
     }
   },
   "implicitDependencies": {

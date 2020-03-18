@@ -89,6 +89,9 @@
       ],
       "@tuskdesk-suite/client/logs/data-access": [
         "libs/client/logs/data-access/src/index.ts"
+      ],
+      "@tuskdesk-suite/client/customer-portal/comments-data-access": [
+        "libs/client/customer-portal/comments-data-access/src/index.ts"
       ]
     }
   },
