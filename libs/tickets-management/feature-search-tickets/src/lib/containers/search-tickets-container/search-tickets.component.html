@@ -1,0 +1,7 @@
+<tickets-management-search-tickets
+  [searchCriteria]="searchCriteria$ | async"
+  [searchResults]="searchResults$ | async"
+  [users]="users$ | async"
+  (searchUsers)="searchUsers($event)"
+  (search)="submit($event)"
+></tickets-management-search-tickets>

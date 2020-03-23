@@ -11,7 +11,7 @@ import {
   routerLoadTicket,
   routerSearchTickets
 } from '@tuskdesk-suite/client/customer-portal/tickets-data-access';
-import { SearchTicketsComponent } from '../search-tickets/search-tickets.component';
+import { SearchTicketsContainerComponent } from '@tuskdesk-suite/tickets-management/feature-search-tickets';
 
 @Injectable()
 export class RouterEffects {
@@ -36,7 +36,7 @@ export class RouterEffects {
   );
 
   loadView_SearchTickets$ = createEffect(() =>
-    this.d.navigation(SearchTicketsComponent, {
+    this.d.navigation(SearchTicketsContainerComponent, {
       run: (a: ActivatedRouteSnapshot) => {
         const searchTerm = a.queryParamMap.get('searchTerm');
         const assignedToUser = a.queryParamMap.get('assignedToUser');

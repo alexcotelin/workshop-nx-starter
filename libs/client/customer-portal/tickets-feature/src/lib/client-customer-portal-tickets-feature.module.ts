@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SearchTicketsComponent } from './search-tickets/search-tickets.component';
 import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { TicketDetailsComponent } from './ticket-details/ticket-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +23,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoggedInUserIdService } from './logged-in-user-id.service';
 import { UpdateTicketFacade } from './+state/update-ticket.facade';
 import { TicketsEffects } from './+state/tickets.effects';
-
+import {
+  TicketsManagementFeatureSearchTicketsModule,
+  SearchTicketsContainerComponent
+} from '@tuskdesk-suite/tickets-management/feature-search-tickets';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,18 +46,15 @@ import { TicketsEffects } from './+state/tickets.effects';
       },
       {
         path: 'search',
-        component: SearchTicketsComponent
+        component: SearchTicketsContainerComponent
       }
     ]),
     ClientCustomerPortalTicketsDataAccessModule,
     ClientCustomerPortalCommentsDataAccessModule,
+    TicketsManagementFeatureSearchTicketsModule,
     EffectsModule.forFeature([RouterEffects, CommentsEffects, TicketsEffects])
   ],
-  declarations: [
-    SearchTicketsComponent,
-    TicketListComponent,
-    TicketDetailsComponent
-  ],
+  declarations: [TicketListComponent, TicketDetailsComponent],
   providers: [
     TicketTimerService,
     AddCommentFacade,

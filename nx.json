@@ -104,6 +104,12 @@
     },
     "client-customer-portal-comments-data-access": {
       "tags": ["type:data-access", "scope:customer-portal", "platform:client"]
+    },
+    "tickets-management-domain": {
+      "tags": ["domain:tickets-management", "type:domain-logic"]
+    },
+    "tickets-management-feature-search-tickets": {
+      "tags": ["domain:tickets-management", "type:feature"]
     }
   },
   "implicitDependencies": {

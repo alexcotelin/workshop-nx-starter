@@ -1241,6 +1241,76 @@
         }
       },
       "schematics": {}
+    },
+    "tickets-management-domain": {
+      "projectType": "library",
+      "root": "libs/tickets-management/domain",
+      "sourceRoot": "libs/tickets-management/domain/src",
+      "prefix": "tickets-management",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tickets-management/domain/tsconfig.lib.json",
+              "libs/tickets-management/domain/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tickets-management/domain/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tickets-management/domain/jest.config.js",
+            "tsConfig": "libs/tickets-management/domain/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/tickets-management/domain/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "tickets-management-feature-search-tickets": {
+      "projectType": "library",
+      "root": "libs/tickets-management/feature-search-tickets",
+      "sourceRoot": "libs/tickets-management/feature-search-tickets/src",
+      "prefix": "tickets-management",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/tickets-management/feature-search-tickets/tsconfig.lib.json",
+              "libs/tickets-management/feature-search-tickets/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/tickets-management/feature-search-tickets/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/tickets-management/feature-search-tickets/jest.config.js",
+            "tsConfig": "libs/tickets-management/feature-search-tickets/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/tickets-management/feature-search-tickets/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "defaultProject": "customer-portal",

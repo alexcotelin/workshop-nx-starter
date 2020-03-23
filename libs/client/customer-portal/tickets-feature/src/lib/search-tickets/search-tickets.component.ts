@@ -25,7 +25,7 @@ interface SearchResult {
   templateUrl: './search-tickets.component.html',
   styleUrls: ['./search-tickets.component.scss']
 })
-export class SearchTicketsComponent implements OnInit {
+export class SSSearchTicketsComponent implements OnInit {
   searchTerm = new FormControl();
   assignedToUser = new FormControl();
   searchCriteria$ = this.ticketsFacade.searchCriteria$;

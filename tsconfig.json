@@ -92,6 +92,12 @@
       ],
       "@tuskdesk-suite/client/customer-portal/comments-data-access": [
         "libs/client/customer-portal/comments-data-access/src/index.ts"
+      ],
+      "@tuskdesk-suite/tickets-management/domain": [
+        "libs/tickets-management/domain/src/index.ts"
+      ],
+      "@tuskdesk-suite/tickets-management/feature-search-tickets": [
+        "libs/tickets-management/feature-search-tickets/src/index.ts"
       ]
     }
   },
